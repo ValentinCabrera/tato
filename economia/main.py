@@ -1,6 +1,4 @@
 import pandas as pd
-import numpy as np
-
 import sympy as sp
 
 df = pd.read_csv("Tabla.csv", sep=';', index_col=0)
@@ -32,7 +30,6 @@ def get_PSI():
     return PSI
 
 PSI = get_PSI()
-input(sp.det(PSI))
 
 def get_w():
     f = lambda i, j: 1 - (1 / sp.exp((h[i][0]/lam)**alpha))
@@ -51,9 +48,7 @@ def get_PHI():
 PHI = get_PHI()
 
 def get_fl():
-    f = -(T/2) * sp.log(2 * sp.pi) - (1/2) #* sp.det(PSI) - (1/2) #* dot(dot(transpose((ye - PHI)), inv(PSI)).flatten(), (ye - PHI))
-    return f
+    return -(T/2) * sp.log(2 * sp.pi) - (1/2) * sp.det(PSI) - (1/2) * (((ye - PHI).transpose())) * PSI.inv() * (ye - PHI)
 
-fl = get_fl()
-
-print(fl)
+if __name__ == "__main__":
+    pass
